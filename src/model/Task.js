@@ -6,8 +6,7 @@ const taskSchema = new Schema({
   name: String,
   description: String,
   duration: String,
-  priority: Number,
-  assignee: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  status: Number,
 }, {collection:'Task'});
 
 export const Task = mongoose.model('Task', taskSchema);

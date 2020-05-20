@@ -2,7 +2,7 @@
 import {User} from "../model/User";
 //Required for dummy data
 const dummy = require('mongoose-dummy');
-const ignoredFields = ['_id','created_at', '__v', /detail.*_info/];
+const ignoredFields = ['created_at', '__v', /detail.*_info/];
 
 export const typeDef = `
     type User {
@@ -10,9 +10,9 @@ export const typeDef = `
         firstname: String
         surname: String
         date: String
+        friends: [User]
+        projects: [Project]
     }
-    # projects: [Project]
-    # friends: [User]
 
     input UserInput{
         firstname: String
@@ -43,7 +43,7 @@ export const resolvers = {
     // Get all users
     users: async () => {
       let users = [];
-      for (let index = 0; index < 5; index++) {
+      for (let index = 0; index < 2; index++) {
         users.push(dummy(User, {
           ignore: ignoredFields,
           returnDate: true

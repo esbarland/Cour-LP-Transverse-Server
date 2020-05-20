@@ -1,7 +1,7 @@
 import { Task } from "../model/Task";
 
 const dummy = require('mongoose-dummy');
-const ignoredFields = ['_id','created_at', '__v', /detail.*_info/];
+const ignoredFields = ['created_at', '__v', /detail.*_info/];
 
 export const typeDef = `
     type Task {
@@ -9,13 +9,13 @@ export const typeDef = `
         name: String
         description: String
         duration: String
-        priority: Int
-        assignee: [User]
+        status: Int
     }
 
     extend type Query {
         taskSchemaAssert: String
         tasks: [Task]
+        task(_id: ID!): Task
     }
 `;
 
@@ -33,6 +33,13 @@ export const resolvers = {
         }))
       } 
       return tasks;
+    },
+
+    task: async (root, { _id }, context, info) => {
+      return dummy(Task, {
+        ignore: ignoredFields,
+        returnDate: true
+      })
     },
   },
 
